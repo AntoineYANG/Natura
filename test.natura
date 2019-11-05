@@ -1,37 +1,11 @@
-#include <iostream>
-#include <stdlib.h>
-using namespace std;
+import <stdio.h>
 
-string checkFilename(const string filename, const string extension);
-int compileCpp(const string fileName);
-int execute(const string fileName);
+@Main
+() => {
+    printf("Hello \\	\"	\'World!\n");
+    printf("A Long");
+    32a = 32b;
 
-int main(int argc, char** argv) {
-	string originFile = *(argv + 1);
-    compileCpp(originFile);
-    execute(originFile);
-
-    return 0;
-}
-
-
-string checkFilename(const string filename, const string extension) {
-	unsigned short size = filename.length();
-	string::size_type point = filename.find(".");
-	if (point == string::npos) {
-		return filename + "." + extension;
-	}
-	else {
-		return filename.substr(0, point) + "." + extension;
-	}
-}
-
-int compileCpp(const string filename) {
-	string request = "g++ " + checkFilename(filename, "cpp");
-	return system(request.c_str());
-}
-
-int execute(const string fileName) {
-	return system(checkFilename(fileName, "exe").c_str());
+    exit(0);
 }
 

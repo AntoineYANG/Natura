@@ -23,8 +23,8 @@ int main(int argc, char** argv) {
 	if (!translate(originFile)) {
 		return 0;
 	}
-    compileCpp(originFile);
-    execute(originFile);
+//    compileCpp(originFile);
+//    execute(originFile);
 
     return 0;
 }
@@ -112,7 +112,33 @@ string compile(string code) {
 					escape = true;
 				}
 				escape = *it == '\\';
-				ready += *it;
+				if (ready.length()) {
+					if (ready[0] >= '0' && ready[0] <= '9') {
+						if ((*it >= '0' && *it <= '9') || *it == '.') {
+							ready += *it;
+						}
+						else {
+							if (ready.length() > 0) {
+								words.push_back(ready);
+								ready = *it;
+							}
+						}
+					}
+					else if ((ready[0] >= 'a' && ready[0] <= 'z') || (ready[0] >= 'A' && ready[0] <= 'Z') || ready[0] == '_' || ready[0] == '$' || ready[0] == '@') {
+						if ((*it >= 'a' && *it <= 'z') || (*it >= 'A' && *it <= 'Z') || *it == '_' || *it == '$' || *it == '@') {
+							ready += *it;
+						}
+						else {
+							if (ready.length() > 0) {
+								words.push_back(ready);
+								ready = *it;
+							}
+						}
+					}
+				}
+				else {
+					ready += *it;
+				}
 			}
 		}
 		else {
@@ -140,6 +166,7 @@ string compile(string code) {
 		}
 		if (it == words.begin() && t[0] == '@') {
 			cout << "[" << t << "]" << endl;
+			target += t;
 		}
 		else if ((t[0] >= 'a' && t[0] <= 'z')|| (t[0] >= 'A' && t[0] <= 'Z')) {
 			if (it != words.begin()) {
@@ -147,8 +174,9 @@ string compile(string code) {
 			}
 			if (nsp.find(t) != nsp.end()) {
 				t = nsp[t];
-				target += t;
+//				target += t;
 			}
+			target += t;
 		}
 		else if (t[0] >= '0' && t[0] <= '9') {
 			if (it != words.begin()) {
