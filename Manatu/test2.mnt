@@ -1,0 +1,11 @@
+let num = 2019;
+
+num * 2017;
+
+3*2;
+let zzg = 1 / 10000;
+zzg;
+num + zzg;
+num = num + zzg;
+num;
+
